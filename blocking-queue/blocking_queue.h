@@ -22,7 +22,7 @@
 
 #include <pthread.h>
 
-#include "./generic-queue/queue.h"
+#include "../generic-queue/queue.h"
 
 typedef struct {
   Queue que;              // int
