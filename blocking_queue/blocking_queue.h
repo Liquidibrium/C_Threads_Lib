@@ -19,15 +19,19 @@
 
 /* 1. send signal */
 /* 2. unlock mutex */
+#ifndef __blockingqueue_
+#define __blockingqueue_
 
 #include <pthread.h>
+#include <stdbool.h>
+#include "../linked-generic-queue/linked_queue.h"
 
-#include "../generic-queue/queue.h"
 
 typedef struct {
-  Queue que;              // int
-  pthread_mutex_t lock; // 1
+  LinkedQueue que;          
+  pthread_mutex_t lock; 
   pthread_cond_t cond;
+  bool cancelled; // if true blocking queue should stop 
 } BlockingQueue;
 
 void BlockingQueueInit(BlockingQueue *q, int elem_size,
@@ -35,6 +39,20 @@ void BlockingQueueInit(BlockingQueue *q, int elem_size,
 
 void BlockingQueueDestroy(BlockingQueue *q);
 
-void BlockingQueueAdd(BlockingQueue *q, void *value_ptr);
+void BlockingQueuePushBack(BlockingQueue *q, void *value_ptr);
 
-void BlockingQueueGet(BlockingQueue *q, void *value_ptr);
+void BlockingQueuePushFront(BlockingQueue *bq, void *value_ptr);
+
+void BlockingQueueGetFront(BlockingQueue *q, void *value_ptr);
+
+int BlockingQueueTryGetFront(BlockingQueue *bq, void *value_ptr);
+
+size_t BlockingQueueSize(BlockingQueue *q);
+
+bool BlockingQueueIsEmpty(BlockingQueue *q);
+
+int BlockingQueueTimedGet(BlockingQueue *bq, void * value_ptr, long time_to_wait);
+
+void BlockingQueueShutDown(BlockingQueue *bq);
+
+#endif

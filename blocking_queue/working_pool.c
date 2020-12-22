@@ -16,7 +16,7 @@ void *Worker(void *args) {
   BlockingQueue *q = ((Args *)args)->q;
   while (true) {
     int x;
-    BlockingQueueGet(q, &x);
+    BlockingQueueGetFront(q, &x);
     if (x == 0) {
       break;
     }
@@ -37,12 +37,12 @@ int main(int argc, char **argv) {
     pthread_create(&workers[i], NULL, Worker, &args[i]);
   }
   for (int i = 1; i < 50; ++i) {
-    BlockingQueueAdd(&q, &i);
+    BlockingQueuePushBack(&q, &i);
   }
   sleep(2);
   int x = 0;
   for (int i = 0; i < NUM_WORKERS; ++i) {
-    BlockingQueueAdd(&q, &x);
+    BlockingQueuePushBack(&q, &x);
   }
   for (int i = 0; i < NUM_WORKERS; ++i) {
     pthread_join(workers[i], NULL);

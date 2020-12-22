@@ -1,4 +1,4 @@
-#include "queue.h"
+#include "linked_queue.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -16,57 +16,57 @@ void testMemo(){
   int i;
   const char * const kQuestionWords[] = {"who", "what", "where", "how", "why"};
   const int kNumQuestionWords = 5; // sizeof(kQuestionWords) / sizeof(kQuestionWords[0]);
-  Queue questionWords;
-  QueueInit(&questionWords, sizeof(char *), FreeString);
+  LinkedQueue questionWords;
+  LinkedQueueInit(&questionWords, sizeof(char *), FreeString);
   for (i = 0; i < kNumQuestionWords; i++) {
     char * questionWord = strdup(kQuestionWords[i]);
-    Enqueue(&questionWords, &questionWord);
+    LinkedQueuePushBack(&questionWords, &questionWord);
   }
   for (i = 0; i < kNumQuestionWords; i++) {
-    char * res ; 
-    Dequeue(&questionWords, &res); 
+    char * res; 
+    LinkedQueueGetFront(&questionWords, &res); 
    // printf("%s\n",res);
     assert(strcmp(kQuestionWords[i],res)==0);
   }
-  QueueDispose(&questionWords);
+  LinkedQueueDispose(&questionWords);
   printf("\nSuccess Memo Test\n");
 }
 
 
 void simpleTest2(){ 
-  Queue q;
-  QueueInit(&q, sizeof(int), NULL);
+  LinkedQueue q;
+  LinkedQueueInit(&q, sizeof(int), NULL);
   for(int i = 1 ; i<=1000 ; i++){
-    Enqueue(&q, &i);
-    assert(QueueSize(&q)==i);
+    LinkedQueuePushBack(&q, &i);
+    assert(LinkedQueueSize(&q)==i);
   }
   for(int i = 1 ; i <= 1000 ; i++){
     int res;
-    QueueFront(&q, &res); 
+    LinkedQueuePeekFront(&q, &res); 
     int res2;
-    Dequeue(&q,&res2);
+    LinkedQueueGetFront(&q,&res2);
      assert(res==res2);
      assert(res==i);
   }
-  QueueDispose(&q); 
+  LinkedQueueDispose(&q); 
   printf("\nSuccess Simple Test2\n");
 }
 void simpleTest1(){ 
-  Queue q;
-  QueueInit(&q, sizeof(int), NULL);
+  LinkedQueue q;
+  LinkedQueueInit(&q, sizeof(int), NULL);
   int add100  = 100 ;
   int add103 = 103 ;
-  Enqueue(&q, &add100);
-  Enqueue(&q, &add103);
-  assert(QueueSize(&q)==2);
+  LinkedQueuePushBack(&q, &add100);
+  LinkedQueuePushBack(&q, &add103);
+  assert(LinkedQueueSize(&q)==2);
   int res100;
   int res103;
-  QueueFront(&q, &res100); 
-  Dequeue(&q,&res100);
+  LinkedQueuePeekFront(&q, &res100); 
+  LinkedQueueGetFront(&q,&res100);
   assert(res100==100);
-  Dequeue(&q,&res103);
+  LinkedQueueGetFront(&q,&res103);
   assert(res103==103);
-  QueueDispose(&q); 
+  LinkedQueueDispose(&q); 
   printf("\nSuccess Simple Test1\n");
 }
 int main(){
