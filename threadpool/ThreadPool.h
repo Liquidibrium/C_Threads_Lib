@@ -2,7 +2,7 @@
 #define __threadpool_
 
 #include <stdlib.h>
-#include "../blocking-queue/blocking_queue.h"
+#include "../blocking_queue/blocking_queue.h"
 #include <pthread.h>
 #include <semaphore.h>
 
@@ -32,6 +32,14 @@ int ThreadPoolInit(ThreadPool* tpool, size_t size);
      */
 int ThreadPoolSchedule(ThreadPool* tpool, void (*func)(void *),void* args );
 
+/**
+ * @brief caller thread waits thread pool to finish 
+ *      
+ * @param tpool 
+ * @param imediate if false waits all tasks to be done else tries to cancel imediately  
+ * @return int 
+ */
+int ThreadPoolWait(ThreadPool *tpool, bool imediate);
 
 /**
  * @brief imediately finishes work 
@@ -41,5 +49,4 @@ int ThreadPoolSchedule(ThreadPool* tpool, void (*func)(void *),void* args );
  */
 int ThreadPoolShutdown(ThreadPool* tpool);
      
-int ThreadPoolWait(ThreadPool *tpool, bool imediate);
 #endif

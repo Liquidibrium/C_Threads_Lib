@@ -4,8 +4,8 @@
 
 typedef struct
 {                         /* struct  Task stored in blockingQueue */
-    bool endWorking;      /* if true running thread would stop */
-    void (*func)(void *);/* function to execute */
+    bool endWorking;      /* if true running thread that's signal to stop */
+    void (*func)(void *); /* function to execute */
     void* args;           /* function arguments */
 } Task;
 

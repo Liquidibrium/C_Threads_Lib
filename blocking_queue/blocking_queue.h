@@ -24,7 +24,7 @@
 
 #include <pthread.h>
 #include <stdbool.h>
-#include "../linked-generic-queue/linked_queue.h"
+#include "./linked_queue/linked_queue.h"
 
 
 typedef struct {
