@@ -4,14 +4,14 @@
 
 void LatchInit(CountDownLatch* latch, int count) {
     assert(latch);
-    assert(count>0);
+    assert(count > 0);
     latch->count = count;
-    pthread_mutex_init(&latch->lock,NULL);
-    pthread_cond_init(&latch->cond,NULL);
-   // sem_init(&latch->sem,0,0);
+    pthread_mutex_init(&latch->lock, NULL);
+    pthread_cond_init(&latch->cond, NULL);
+    // sem_init(&latch->sem,0,0);
 }
 
-void LatchDispose(CountDownLatch* latch){
+void LatchDispose(CountDownLatch* latch) {
     assert(latch);
     int err;
     err = pthread_mutex_destroy(&latch->lock);
@@ -23,12 +23,12 @@ void LatchAwait(CountDownLatch* latch) {
     assert(latch);
     int err;
     err = pthread_mutex_lock(&latch->lock);
-    if(latch->count == 0) {
+    if (latch->count == 0) {
         err = pthread_mutex_unlock(&latch->lock);
         return;
     }
 
-    err = pthread_cond_wait(&latch->cond,&latch->lock);
+    err = pthread_cond_wait(&latch->cond, &latch->lock);
 
     // VS SECOND VERSION only semaphore 
     // int count = latch->count;
@@ -41,35 +41,35 @@ int LatchTimedAwait(CountDownLatch* latch, long time_to_wait) {
     assert(latch);
     int err;
     err = pthread_mutex_lock(&latch->lock);
-    if(latch->count == 0) { 
+    if (latch->count == 0) {
         err = pthread_mutex_unlock(&latch->lock);
         return  err;
     }
     struct timespec ts;
     err = clock_gettime(CLOCK_REALTIME, &ts);
     ts.tv_sec += time_to_wait;
-    if(time_to_wait == 0 ||
-        (err = pthread_cond_timedwait(&latch->cond, &latch->lock, &ts)) == -1){ // Timed out 
+    if (time_to_wait == 0 ||
+        (err = pthread_cond_timedwait(&latch->cond, &latch->lock, &ts)) == -1) { // Timed out 
         // printf("errno %d\n",errno);
         return err;
     }
     return err;
 }
-void LatchCountDown(CountDownLatch* latch){
+void LatchCountDown(CountDownLatch* latch) {
     assert(latch);
     int err;
     err = pthread_mutex_lock(&latch->lock);
-    if(latch->count == 0){
+    if (latch->count == 0) {
         err = pthread_mutex_unlock(&latch->lock);
         return;
     }
 
     latch->count--;                                          // CAS?
 
-    if(latch->count==0)
+    if (latch->count == 0)
         err = pthread_cond_broadcast(&latch->cond);               // signal? 
     err = pthread_mutex_unlock(&latch->lock);
-        
+
     // VS SECOND VERSION only semaphore 
     // int value;
     // sem_getvalue(&latch->sem,&value);
@@ -78,7 +78,7 @@ void LatchCountDown(CountDownLatch* latch){
 }
 
 
-int LatchGetCount(CountDownLatch* latch){
+int LatchGetCount(CountDownLatch* latch) {
     assert(latch);
     int err;
     err = pthread_mutex_lock(&latch->lock);

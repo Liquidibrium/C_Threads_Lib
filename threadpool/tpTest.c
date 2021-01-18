@@ -25,7 +25,6 @@ int main(int argc, char **argv)
     pthread_mutex_init(&lock, NULL);
 
     ThreadPool pool;
-    /* Testing immediate shutdown */
     left = SIZE;
     ThreadPoolInit(&pool,THREAD);
     for (i = 0; i < SIZE; i++) {
@@ -34,8 +33,7 @@ int main(int argc, char **argv)
     
     ThreadPoolWait(&pool,false);
     assert(ThreadPoolShutdown(&pool) == 0);
-    printf("\n%d\n",left);
-    assert(left == 0);
+    printf("result %d\n", left == 0);
     pthread_mutex_destroy(&lock);
 
     return 0;

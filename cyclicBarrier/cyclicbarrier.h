@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <stdbool.h>
 
-typedef void (*Function)(void *);// Barrier action  performed by the last thread entering the barrier
+typedef void (*Function)(void*);// Barrier action  performed by the last thread entering the barrier
 
 typedef struct CyclicBarrier {
     int number_waiting; // number of waiting threads
@@ -12,16 +12,14 @@ typedef struct CyclicBarrier {
     bool should_action_performed;
 
     Function action;
-    void * arg;
+    void* arg;
     pthread_mutex_t lock;
     pthread_cond_t cond;
 } CyclicBarrier;
 
 void BarierInit(CyclicBarrier* barrier, int parties, Function barrier_action, void* args);
 
-
 void BarierDispose(CyclicBarrier* barrier);
-
 
 int BarierAwait(CyclicBarrier* barrier);
 

@@ -7,10 +7,6 @@ static void FreeString(void *elemAddr) {
   char *s = *(char **) elemAddr;
   free(s); 
 }
-static void PrintString(void *elemAddr) {
-  char *word = *(char **)elemAddr;
-  printf("\t%s\n", word);
-}
 
 void testMemo(){
   int i;

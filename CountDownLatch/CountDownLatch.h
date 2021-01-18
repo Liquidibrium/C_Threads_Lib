@@ -14,53 +14,52 @@ typedef struct CountDownLatch {
 
 /**
  * @brief initialize latch
- * 
- * @param latch 
+ *
+ * @param latch
  * @param count as thread counter
  */
 void LatchInit(CountDownLatch* latch, int count);
 
 /**
- * @brief destroies memory used 
- *        does not callse free(latch)
+ * @brief destroyed memory used
+ *        does not calles free(latch)
  *        struct memory must be freed by user
- * @param latch 
+ * @param latch
  */
 void LatchDispose(CountDownLatch* latch);
 
 /**
- * @brief the thread whih calls this method 
- *        waits until count becames zero and 
- *        then continues run  
- * @param latch 
+ * @brief the caller thread  until count becomes zero and
+ *        then continues run
+ * @param latch
  */
 void LatchAwait(CountDownLatch* latch);
 
 /**
- * @brief the thread which calls this method 
- *        waits until count becames zero or 
- *        until time_to_wait as seconds  
- *        then continues run 
- * 
- * @param latch 
- * @param time_to_wait 
- * @return int return -1 if E TIMED OUT , 0 if latch count is already 0 or timedwaited successfully 
+ * @brief the thread which calls this method
+ *        waits until count becomes zero or
+ *        until time_to_wait as seconds
+ *        then continues run
+ *
+ * @param latch
+ * @param time_to_wait time in seconds 
+ * @return int return -1 if E TIMED OUT , 0 if latch count is already 0 or timedwaited successfully
  */
 int LatchTimedAwait(CountDownLatch* latch, long time_to_wait);
 
 /**
- * @brief decrement count by one 
+ * @brief decrement count by one
  *        if LatchAwait is called
- *        then  the waiting thread is realesed 
- * @param latch 
+ *        then  the waiting thread is released
+ * @param latch
  */
 void LatchCountDown(CountDownLatch* latch);
 
 /**
- * @brief  return value of count 
+ * @brief  return value of count
  *         at that specific moment, but can change every time;
- * @param latch 
- * @return int 
+ * @param latch
+ * @return int
  */
 int LatchGetCount(CountDownLatch* latch);
 #endif

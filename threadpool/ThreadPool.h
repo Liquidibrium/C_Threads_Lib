@@ -24,7 +24,7 @@ ThreadPool pool;
 int ThreadPoolInit(ThreadPool* tpool, size_t size);
     
     /**
-     * @brief add new Task in tpool
+     * @brief add new Task in thread pool
      * @param tpool 
      * @param func 
      * @param args 
@@ -36,14 +36,14 @@ int ThreadPoolSchedule(ThreadPool* tpool, void (*func)(void *),void* args );
  * @brief caller thread waits thread pool to finish 
  *      
  * @param tpool 
- * @param imediate if false waits all tasks to be done else tries to cancel imediately  
+ * @param immediate if false waits all tasks to be done else tries to cancel immediately  
  * @return int 
  */
-int ThreadPoolWait(ThreadPool *tpool, bool imediate);
+int ThreadPoolWait(ThreadPool *tpool, bool immediate);
 
 /**
- * @brief imediately finishes work 
- *        and destorys tpool
+ * @brief immediately finishes work 
+ *        and destroys thread pool
  * @param tpool 
  * @return int 
  */
