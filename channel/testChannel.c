@@ -20,7 +20,7 @@ void* receiver(void* args) {
         char* str;
         ChannelReceive(ch, &str);
         count--;
-       // printf("\t%s\n", str);
+        // printf("\t%s\n", str);
         free(str);
         if (count == 0) {
             break;
@@ -126,7 +126,7 @@ void  test2() {
     ChannelSend(&ch, &x);
     double* res = 0;
     ChannelReceive(&ch, &res);
-  //  printf("%f\n", *res);
+    //  printf("%f\n", *res);
     ChannelDispose(&ch);
     free(x);
     printf("success test 2 \n");
@@ -144,7 +144,7 @@ void testSelect() {
     *messages[0] = 123;// mesage to send 
     *messages[1] = 5; // message to receive 
 
-    int messageToSend= 199;
+    int messageToSend = 199;
     ChannelSend(channels[1], &messageToSend);
 
     switch (ChannelSelect(channels, messages, 1, 1)) {// randomly choses

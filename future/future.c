@@ -1,5 +1,4 @@
 #include "future.h"
-
 #include <assert.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -80,8 +79,7 @@ int FutureTimedGetResult(Future* fut, void** value_pointer, long time_to_wait) {
     int err;
     if (time_to_wait == 0 ||
         (err = sem_timedwait(&fut->sem, &ts)) == -1) { // Timed out 
-       // printf("errno %d\n",errno);
-        return -1;
+        return errno;
     }
     *value_pointer = fut->result;
     return 0;

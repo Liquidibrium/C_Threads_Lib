@@ -5,5 +5,5 @@
 - [ ] effectiveness   
     - [ ] thread-pool shut down can be improved    
     - [ ] un-buffered channel implementation  
-    - [ ] time and try wait get methods 
-- [ ] cyclicBarrier documentation  comments
+    - [ ] timed and try wait get methods 
+- [x] cyclicBarrier documentation  comments

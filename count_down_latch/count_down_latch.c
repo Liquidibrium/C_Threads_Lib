@@ -1,4 +1,4 @@
-#include "CountDownLatch.h"
+#include "count_down_latch.h"
 #include <assert.h>
 #include <time.h>
 
@@ -64,10 +64,10 @@ void LatchCountDown(CountDownLatch* latch) {
         return;
     }
 
-    latch->count--;                                          // CAS?
+    latch->count--;                                          
 
     if (latch->count == 0)
-        err = pthread_cond_broadcast(&latch->cond);               // signal? 
+        err = pthread_cond_broadcast(&latch->cond);      //can be changed with signal without if 
     err = pthread_mutex_unlock(&latch->lock);
 
     // VS SECOND VERSION only semaphore 

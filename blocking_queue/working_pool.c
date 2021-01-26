@@ -21,10 +21,10 @@ void* Worker(void* args) {
     if (x == 0) {
       break;
     }
-//    printf("%d: %d\n", id, x);
+    //    printf("%d: %d\n", id, x);
   }
   (*((Args*)args)->count)++;
-//  printf("%d: DONE\n", id);
+  //  printf("%d: DONE\n", id);
   return NULL;
 }
 
@@ -52,6 +52,6 @@ int main(int argc, char** argv) {
     pthread_join(workers[i], NULL);
   }
   BlockingQueueDestroy(&q);
-  printf("result %d\n",counter==NUM_WORKERS);
+  printf("result %d\n", counter == NUM_WORKERS);
   return 0;
 }

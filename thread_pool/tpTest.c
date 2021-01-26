@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <assert.h>
 
-#include "ThreadPool.h"
+#include "thread_pool.h"
 
 int left;
 pthread_mutex_t lock;
